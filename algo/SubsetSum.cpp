@@ -6,43 +6,43 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<int> vi;
 
-void search(vi arr, int n, int index, vi& subset)
+void search(vi& arr, vi& sub, int index)
 {
-    if (index == n)
+    // base-case
+    if (index == arr.size())
     {
-        // process subset
+        int sum = 0;
         cout << "( ";
-        int count = 0;
-        for (int item : subset)
+        for (int i: sub)
         {
-            cout << item << " ";
-            count += item;
+            cout << i << " ";
+            sum += i;
         }
         cout << ")";
-        if (count == 1)
-        {
+        
+        if (sum == 3)
             cout << "--";
-        }
+        
         cout << "\n";
     }
     else
     {
-        // include k in the subset
-        subset.push_back(arr[index]);
-        search(arr, n, index+1, subset);
-        subset.pop_back();
-        // don't include k in the subset
-        search(arr, n, index+1, subset);
+        // include current element
+        sub.push_back(arr[index]);
+        search(arr, sub, index+1);
+        // exclude current element
+        sub.pop_back();
+        search(arr, sub, index+1);
     }
 }
 
 void solve()
 {
-    vi arr = {1};
-    int n = (int)arr.size();
+    vi arr = {1, 2, 3};
+    vi sub;
     int index = 0;
-    vi subset;
-    search(arr, n, index, subset);
+    
+    search(arr, sub, index);
 }
 
 int main()
